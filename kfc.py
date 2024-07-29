@@ -32,20 +32,17 @@ url = f'https://map.naver.com/p/search/{keyword}'
 driver.get(url)
 action = ActionChains(driver)
 
-naver_res = pd.DataFrame(columns=['title', 'address'])
-last_name = ''
-
 def search_iframe():
     try:
         driver.switch_to.default_content()
-        WebDriverWait(driver, 20).until(EC.frame_to_be_available_and_switch_to_it((By.ID, "searchIframe")))
+        WebDriverWait(driver, 30).until(EC.frame_to_be_available_and_switch_to_it((By.ID, "searchIframe")))
     except Exception as e:
         print(f"Error switching to iframe: {e}")
 
 def entry_iframe():
     try:
         driver.switch_to.default_content()
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
         driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="entryIframe"]'))
     except Exception as e:
         print(f"Error switching to entry iframe: {e}")
@@ -86,7 +83,7 @@ def save_to_json():
 page_num = 1
 
 while True:
-    time.sleep(1.5)
+    time.sleep(2)  # 페이지 로딩 대기 시간
     search_iframe()
     elem, name_list = chk_names()
 
@@ -111,12 +108,12 @@ while True:
 
     # next page
     try:
-        next_button = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="eUTV2" and .//span[@class="place_blind" and text()="다음페이지"]]')))
+        next_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="eUTV2" and .//span[@class="place_blind" and text()="다음페이지"]]')))
         if next_button:
             next_button.click()
             print(f"{page_num} 페이지 완료")
             page_num += 1
-            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, 'place_bluelink')))
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'place_bluelink')))
         else:
             print("마지막 페이지에 도달했습니다.")
             break
