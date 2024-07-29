@@ -1,24 +1,31 @@
-# import package
-import pandas as pd
 from selenium import webdriver
-from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-import time
-from bs4 import BeautifulSoup
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
 from datetime import datetime
+import time
 import json
 
 # 현재 날짜 가져오기
 current_date = datetime.now().strftime("%Y-%m-%d")
-filename = f"kfc_{current_date}.json"
+filename = f"kfc/kfc_{current_date}.json"
 
+# ChromeOptions 객체 생성
 chrome_options = ChromeOptions()
 chrome_options.add_argument("--headless")  # 헤드리스 모드 사용
 chrome_options.add_argument("--no-sandbox")  # 샌드박스 사용 안 함
 chrome_options.add_argument("--disable-dev-shm-usage")  # 공유 메모리 사용 안 함
 chrome_options.add_argument("--disable-gpu")  # GPU 사용 안 함
+
+# ChromeDriver 경로 설정
+service = ChromeService(executable_path=ChromeDriverManager().install())
+
+# WebDriver 객체 생성
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
 keyword = 'KFC DT점'
 url = f'https://map.naver.com/p/search/{keyword}'
