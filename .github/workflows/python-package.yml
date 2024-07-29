@@ -35,12 +35,12 @@ jobs:
           pip install webdriver_manager
     - name: Run Python scripts
       run: |
-        python3 ceoban.py
+        # python3 ceoban.py
         python3 kfc.py
     - name: Commits
       run : |
         git config --global user.email "sdw10195@gmail.com"
         git config --global user.name "seodaewon1"
-        git add ceoban/ceoban_*.json
+        # git add ceoban/ceoban_*.json
         git add kfc/kfc_*.json
      
