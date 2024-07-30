@@ -10,6 +10,11 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from selenium.webdriver import ActionChains
 import time
+import logging  # logging 모듈 추가
+
+# 로깅 설정
+logging.basicConfig(level=logging.INFO)  # 로그 레벨 설정
+logger = logging.getLogger(__name__)  # 로거 객체 생성
 
 # 현재 날짜 가져오기
 current_date = datetime.now().strftime("%Y-%m-%d")
