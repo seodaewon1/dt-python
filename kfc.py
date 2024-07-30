@@ -10,11 +10,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from selenium.webdriver import ActionChains
 import time
-import logging
-
-# 로깅 설정
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # 현재 날짜 가져오기
 current_date = datetime.now().strftime("%Y-%m-%d")
@@ -57,7 +52,7 @@ def search_iframe():
 
 def entry_iframe():
  for i in range(5):
-        time.sleep(20)
+        time.sleep(60)
 
         try:
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="entryIframe"]'))
@@ -85,7 +80,7 @@ def crawling_main(elem, name_list):
     for e in elem:
         try:
             e.click()
-            time.sleep(20)  # 페이지 로드 시간을 기다림
+            time.sleep(60)  # 페이지 로드 시간을 기다림
             entry_iframe()
             soup = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -112,7 +107,7 @@ def save_to_json():
 page_num = 1
 
 while True:
-    time.sleep(20)
+    time.sleep(60)
     elem, name_list = chk_names()
     
     if not name_list:
