@@ -36,9 +36,11 @@ action = ActionChains(driver)
 def search_iframe():
     try:
         driver.switch_to.default_content()
+        print("Waiting for searchIframe to be available...")
         iframe_present = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "searchIframe")))
         if iframe_present:
             driver.switch_to.frame(iframe_present)
+            print("Switched to searchIframe")
         else:
             print("searchIframe not found")
     except Exception as e:
@@ -47,9 +49,11 @@ def search_iframe():
 def entry_iframe():
     try:
         driver.switch_to.default_content()
+        print("Waiting for entryIframe to be available...")
         iframe_present = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
         if iframe_present:
             driver.switch_to.frame(iframe_present)
+            print("Switched to entryIframe")
         else:
             print("entryIframe not found")
     except Exception as e:
@@ -59,6 +63,10 @@ def chk_names():
     search_iframe()
     elem = driver.find_elements(By.CSS_SELECTOR, '.place_bluelink')
     name_list = [e.text for e in elem]
+    if not name_list:
+        print("No names found")
+    else:
+        print(f"Found names: {name_list}")
     return elem, name_list
 
 def crawling_main():
