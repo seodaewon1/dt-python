@@ -36,15 +36,22 @@ action = ActionChains(driver)
 def search_iframe():
     try:
         driver.switch_to.default_content()
-        WebDriverWait(driver, 30).until(EC.frame_to_be_available_and_switch_to_it((By.ID, "searchIframe")))
+        iframe_present = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "searchIframe")))
+        if iframe_present:
+            driver.switch_to.frame(iframe_present)
+        else:
+            print("searchIframe not found")
     except Exception as e:
         print(f"Error switching to iframe: {e}")
 
 def entry_iframe():
     try:
         driver.switch_to.default_content()
-        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
-        driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="entryIframe"]'))
+        iframe_present = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
+        if iframe_present:
+            driver.switch_to.frame(iframe_present)
+        else:
+            print("entryIframe not found")
     except Exception as e:
         print(f"Error switching to entry iframe: {e}")
 
