@@ -16,7 +16,7 @@ filename = f"kfc/kfc_{current_date}.json"
 
 # ChromeOptions 객체 생성
 chrome_options = ChromeOptions()
-chrome_options.add_argument("--headless")  # 헤드리스 모드 사용
+# chrome_options.add_argument("--headless")  # 헤드리스 모드 사용
 chrome_options.add_argument("--no-sandbox")  # 샌드박스 사용 안 함
 chrome_options.add_argument("--disable-dev-shm-usage")  # 공유 메모리 사용 안 함
 chrome_options.add_argument("--disable-gpu")  # GPU 사용 안 함
