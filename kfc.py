@@ -41,6 +41,8 @@ def search_iframe():
         if iframe_present:
             driver.switch_to.frame(iframe_present)
             print("Switched to searchIframe")
+            # print iframe contents for debugging
+            print(driver.page_source)
         else:
             print("searchIframe not found")
     except Exception as e:
@@ -61,13 +63,19 @@ def entry_iframe():
 
 def chk_names():
     search_iframe()
-    elem = driver.find_elements(By.CSS_SELECTOR, '.place_bluelink')
-    name_list = [e.text for e in elem]
-    if not name_list:
-        print("No names found")
-    else:
-        print(f"Found names: {name_list}")
-    return elem, name_list
+    try:
+        # Wait for the elements to be present
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.place_bluelink')))
+        elem = driver.find_elements(By.CSS_SELECTOR, '.place_bluelink')
+        name_list = [e.text for e in elem]
+        if not name_list:
+            print("No names found")
+        else:
+            print(f"Found names: {name_list}")
+        return elem, name_list
+    except Exception as e:
+        print(f"Error finding names: {e}")
+        return [], []
 
 def crawling_main():
     global naver_res
@@ -99,7 +107,6 @@ def save_to_json():
 page_num = 1
 last_name = None
 naver_res = pd.DataFrame()
-
 while True:
     time.sleep(2)  # 페이지 로딩 대기 시간
     search_iframe()
