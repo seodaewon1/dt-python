@@ -21,6 +21,7 @@ chrome_options.add_argument("--headless")  # 헤드리스 모드 사용
 chrome_options.add_argument("--no-sandbox")  # 샌드박스 사용 안 함
 chrome_options.add_argument("--disable-dev-shm-usage")  # 공유 메모리 사용 안 함
 chrome_options.add_argument("--disable-gpu")  # GPU 사용 안 함
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
 # ChromeDriver 경로 설정
 service = ChromeService(executable_path=ChromeDriverManager().install())
@@ -83,7 +84,7 @@ def crawling_main():
 
     for e in elem:
         e.click()
-        time.sleep(2)  # 페이지 로드 시간을 기다림
+        time.sleep(5)  # 페이지 로드 시간을 기다림
         entry_iframe()
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -107,8 +108,9 @@ def save_to_json():
 page_num = 1
 last_name = None
 naver_res = pd.DataFrame()
+
 while True:
-    time.sleep(2)  # 페이지 로딩 대기 시간
+    time.sleep(5)  # 페이지 로딩 대기 시간
     search_iframe()
     elem, name_list = chk_names()
 
@@ -121,7 +123,7 @@ while True:
 
     while True:
         action.move_to_element(elem[-1]).perform()
-        time.sleep(2)  # 이동 후 잠시 대기
+        time.sleep(5)  # 이동 후 잠시 대기
         elem, name_list = chk_names()
 
         if not name_list or last_name == name_list[-1]:
