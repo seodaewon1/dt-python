@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # 현재 날짜 가져오기
 current_date = datetime.now().strftime("%Y-%m-%d")
-filename = f"lotte/lotte_{current_date}.json"
+filename = f"kfc/kfc_{current_date}.json"
 
 # ChromeOptions 객체 생성
 chrome_options = ChromeOptions()
@@ -34,7 +34,7 @@ service = ChromeService(executable_path=ChromeDriverManager().install())
 # WebDriver 객체 생성
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-keyword = '롯데리아 DT점'
+keyword = 'KFC DT점'
 url = f'https://map.naver.com/p/search/{keyword}'
 driver.get(url)
 action = ActionChains(driver)
