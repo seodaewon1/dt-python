@@ -66,8 +66,8 @@ def chk_names():
     search_iframe()
     try:
         # Wait for the elements to be present
-        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span.GHAhO')))
-        elem = driver.find_elements(By.CSS_SELECTOR, 'span.GHAhO')
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.place_bluelink TYaxT')))
+        elem = driver.find_elements(By.CSS_SELECTOR, '.place_bluelink TYaxT')
         name_list = [e.text for e in elem]
         if not name_list:
             print("No names found")
