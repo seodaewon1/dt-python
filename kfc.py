@@ -56,22 +56,20 @@ def search_iframe():
         logger.error(f"Error switching to iframe: {e}")
 
 def entry_iframe():
-    try:
-        driver.switch_to.default_content()
-        logger.info("Waiting for entryIframe to be available...")
-        iframe_present = WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, "entryIframe")))
-        if iframe_present:
-            driver.switch_to.frame(iframe_present)
-            logger.info("Switched to entryIframe")
-        else:
-            logger.error("entryIframe not found")
-    except Exception as e:
-        logger.error(f"Error switching to entry iframe: {e}")
+ for i in range(5):
+        time.sleep(20)
+
+        try:
+            driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="entryIframe"]'))
+            break
+        except:
+            pass
+
 
 def chk_names():
     search_iframe()
     try:
-        WebDriverWait(driver, 60).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '.place_bluelink')))
+        WebDriverWait(driver, 100).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '.place_bluelink')))
         elem = driver.find_elements(By.CSS_SELECTOR, '.place_bluelink')
         name_list = [e.text for e in elem]
         logger.info(f"Names found: {name_list}")
