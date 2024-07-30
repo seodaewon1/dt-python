@@ -84,7 +84,7 @@ def crawling_main():
 
     for e in elem:
         e.click()
-        time.sleep(5)  # 페이지 로드 시간을 기다림
+        time.sleep(30)  # 페이지 로드 시간을 기다림
         entry_iframe()
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -110,7 +110,7 @@ last_name = None
 naver_res = pd.DataFrame()
 
 while True:
-    time.sleep(5)  # 페이지 로딩 대기 시간
+    time.sleep(30)  # 페이지 로딩 대기 시간
     search_iframe()
     elem, name_list = chk_names()
 
