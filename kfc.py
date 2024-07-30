@@ -38,7 +38,7 @@ def search_iframe():
     try:
         driver.switch_to.default_content()
         print("Waiting for searchIframe to be available...")
-        iframe_present = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "searchIframe")))
+        iframe_present = WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.ID, "searchIframe")))
         if iframe_present:
             driver.switch_to.frame(iframe_present)
             print("Switched to searchIframe")
@@ -53,7 +53,7 @@ def entry_iframe():
     try:
         driver.switch_to.default_content()
         print("Waiting for entryIframe to be available...")
-        iframe_present = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
+        iframe_present = WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.XPATH, '//*[@id="entryIframe"]')))
         if iframe_present:
             driver.switch_to.frame(iframe_present)
             print("Switched to entryIframe")
@@ -66,7 +66,7 @@ def chk_names():
     search_iframe()
     try:
         # Wait for the elements to be present
-        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.place_bluelink TYaxT')))
+        WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.place_bluelink TYaxT')))
         elem = driver.find_elements(By.CSS_SELECTOR, '.place_bluelink TYaxT')
         name_list = [e.text for e in elem]
         if not name_list:
@@ -84,7 +84,7 @@ def crawling_main():
 
     for e in elem:
         e.click()
-        time.sleep(30)  # 페이지 로드 시간을 기다림
+        time.sleep(60)  # 페이지 로드 시간을 기다림
         entry_iframe()
         soup = BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -110,7 +110,7 @@ last_name = None
 naver_res = pd.DataFrame()
 
 while True:
-    time.sleep(30)  # 페이지 로딩 대기 시간
+    time.sleep(60)  # 페이지 로딩 대기 시간
     search_iframe()
     elem, name_list = chk_names()
 
@@ -123,7 +123,7 @@ while True:
 
     while True:
         action.move_to_element(elem[-1]).perform()
-        time.sleep(5)  # 이동 후 잠시 대기
+        time.sleep(20)  # 이동 후 잠시 대기
         elem, name_list = chk_names()
 
         if not name_list or last_name == name_list[-1]:
@@ -135,12 +135,12 @@ while True:
 
     # next page
     try:
-        next_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="eUTV2" and .//span[@class="place_blind" and text()="다음페이지"]]')))
+        next_button = WebDriverWait(driver, 100).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="eUTV2" and .//span[@class="place_blind" and text()="다음페이지"]]')))
         if next_button:
             next_button.click()
             print(f"{page_num} 페이지 완료")
             page_num += 1
-            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'place_bluelink')))
+            WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.CLASS_NAME, 'place_bluelink')))
         else:
             print("마지막 페이지에 도달했습니다.")
             break
